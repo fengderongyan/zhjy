@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.manage.mapper.UserBindingMapper">
+    
+   <select id="selectYjbbOperExists" parameterType="user" resultType="Integer">
+   		select count(1) from sys_user where yjbb_oper = #{yjbbOper} and user_id != #{userId} and del_flag = 0
+   </select>
+   
+   <update id="updateUserBinding" parameterType="user">
+   		update sys_user set yjbb_oper = #{yjbbOper}, yjbb_pwd = #{yjbbPwd}, yjbb_status = 1 where user_id = #{userId}
+   </update>
+   <update id="removeYjbbOper" parameterType="Long">
+   		update sys_user set yjbb_oper = null, yjbb_pwd = null, yjbb_status = 0 where user_id = #{userId}
+   </update>
+</mapper>

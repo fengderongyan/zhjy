@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('用户绑定')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-binding-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">饮酒报备账号：</label>
+                <div class="col-sm-8">
+                    <input name="yjbbOper" id=""yjbbOper class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">饮酒报备密码：</label>
+                <div class="col-sm-8">
+                    <input name="yjbbPwd" id="yjbbPwd" class="form-control" type="password" required>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: sgyjs" />
+    <script type="text/javascript">
+        var prefix = ctx + "manage/binding"
+        $("#form-binding-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+            	var operator_id = $('#yjbbOper').val();
+            	var password = $('#yjbbPwd').val();
+            	var url = prefix + "/checkOperAndPwd";
+            	////1：成功登录 -1:用户名不存在 -2:用户名与密码不匹配 -3:无法连接数据库
+            	var result = sgyjs.doReturnAjax(url, {"operator_id":operator_id, "password":password})
+            	console.log(result);
+                $.operate.save(prefix + "/add", $('#form-binding-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>
